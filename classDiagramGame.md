@@ -5,11 +5,6 @@ classDiagram
 		ON
 		OFF
 	}
-	class IORole{
-		<<Enumeration>>
-		MASTER
-		SLAVE
-	}
     class Energy {
         -Entity generator
         -WorkState state
@@ -42,14 +37,9 @@ classDiagram
     }
 	class Head~T~ {
 		-Collection~*Output~T~~ outputs
-		+connectReciever()
-		+disconnectReciever()
-		+handleRequest()
 	}
 	class Tail~T~ {
 		-Collection~*Input~T~~ inputs
-		+connectEmitter()
-		+disconnectEmitter()
 		+handleInput()
 	}
 	class Transit~T~ {
@@ -76,23 +66,6 @@ classDiagram
 		-Entity control
 	}
 
-    class DNode{
-        -IOPair~Data~ master
-        +setMaster(~DNode~ master)
-    }
-	class DMaster{
-		-Collection~IOPair~Data~~ slaves
-	}	
-	class DSlave{
-		-IOPair~Data~ infoSlave
-	}
-	class DInfoCarrier{
-		-Collection~Byte~ data
-		+get()
-		+write()
-		+wipe()
-	}
-
 
 	Input <|-- IOPair
 	Output <|-- IOPair
@@ -108,14 +81,4 @@ classDiagram
 	Transit <|-- ELogic : T --> Energy
 
 	ELogic <|-- EPhysLogic
-
-    DNode <|-- DMaster
-    DNode <|-- DSlave
-    DNode <|-- DInfoCarrier
-
-	IOPair "1..*" --* "1" DMaster : Slaves
-	IOPair "1" --* "1" DSlave : InfoSlave
-	DMaster <-- DMaster : Control
-	DMaster <-- DSlave : Control
-	DSlave <-- DInfoCarrier : Control
 ```
